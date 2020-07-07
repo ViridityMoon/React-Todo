@@ -13,7 +13,17 @@ class App extends React.Component {
       list: [
         {
           toDo: 'Do thing',
-          id: 1234567890123,
+          id: 1234567029483,
+          completed: false,
+        },
+        {
+          toDo: 'Thing do',
+          id: 1234567889123,
+          completed: false,
+        },
+        {
+          toDo: 'Another todo',
+          id: 1238747890123,
           completed: false,
         }
       ],
@@ -21,13 +31,14 @@ class App extends React.Component {
       onSubmit: this.onSubmit,
       formData: '',
     };
-  }
+  };
+
   onInputChange = evt => {
-    // this.setState({[evt.target.name] : evt.target.value}); 
     this.setState({
       formData: evt.target.value
     });
   };
+
   onSubmit = evt => {
     evt.preventDefault();
     const newToDo = {
@@ -35,28 +46,31 @@ class App extends React.Component {
       id: Date.now(),
       completed: false,
     };
-    this.setState({list: [...this.state.list, newToDo]});
-    this.setState({formData: ''});
-    // evt.target.reset();
+    this.setState({
+      list: [...this.state.list, newToDo],
+      formData: ''
+    });
   };
-  toggle = (id) => {
+  
+  toggle = id => {
     this.setState({
       list: this.state.list.map(toDo => {
         return toDo.id === id ? {...toDo, completed: !toDo.completed} : toDo
-      }),
+      })
     });
   };
+
   clear = () => {
     this.setState({
       list: this.state.list.filter(toDo => {
         return !toDo.completed
-      }),
+      })
     });
   };
   
   render() {
     return (
-      <div>
+      <div className='app'>
         <ToDoForm formData={this.formData} onInputChange={this.state.onInputChange} onSubmit={this.state.onSubmit} clear={this.clear} list={this.state.list}/>
         <ToDoList list={this.state.list} toggle={this.toggle}/>
       </div>
